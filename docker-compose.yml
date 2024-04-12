@@ -1,0 +1,19 @@
+services:
+  auth_app:
+    command: bash -c "rm -f tmp/pids/server.pid  && bin/setup && bundle exec rails s -p 3007 -b '0.0.0.0'"
+    image: ruby:3.2.3
+    working_dir: /auth_app
+    container_name: auth_app
+    tty: true
+    stdin_open: true
+    volumes:
+      - .:/auth_app/
+    ports:
+      - "3007:3007"
+    networks:
+    - policy-network
+
+networks:
+  policy-network:
+    name: policy_network
+    external: true
