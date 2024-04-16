@@ -7,6 +7,7 @@ class HomeController < ApplicationController
     body = {
       query: "query {
         policies {
+          policyId
           dataEmissao
           segurado {
             nome
@@ -18,6 +19,8 @@ class HomeController < ApplicationController
     headers = { 'Content-Type' => 'application/json' }
 
     response = Net::HTTP.post(uri, body.to_json, headers)
-    @policies = JSON.parse(response.body)
+    policies_hash = JSON.parse(response.body)
+
+    @policies = policies_hash["data"]["policies"]
   end
 end
