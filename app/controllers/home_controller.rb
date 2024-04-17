@@ -17,7 +17,14 @@ class HomeController < ApplicationController
     }
     headers = { 'Content-Type' => 'application/json' }
 
-    response = Net::HTTP.post(uri, body.to_json, headers)
-    @policies = JSON.parse(response.body)
+    begin
+      response = Net::HTTP.post(uri, body.to_json, headers)
+      @policies = JSON.parse(response.body)
+    rescue StandardError => error
+      @message = "Ocorreu um erro e não foi possível fazer a consulta das apólices. Erro: #{error}"
+      Rails.logger.warn(@message)
+    else
+      @request_completed = true
+    end
   end
 end
