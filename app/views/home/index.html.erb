@@ -1,9 +1,10 @@
 <h1> Listar as views aqui </h1>
 <% if user_signed_in? %>
   <h4> Parabéns <%= current_user.email %> </h4>
-  <% if @request_completed %>
-    <p><%= @policies %></p>
+  <%= @error_message unless @request_completed %>
+  <% if @policies["data"]["policies"].empty? %>
+    <p> No momento não há nenhuma apólice cadastrada </p>
   <% else %>
-    <p><%= @message %></p>
+    <%= @policies %>
   <% end %>
 <% end %>
