@@ -19,12 +19,15 @@ class HomeController < ApplicationController
 
     begin
       response = Net::HTTP.post(uri, body.to_json, headers)
-      @policies = JSON.parse(response.body)
+      if response.code == "200"
+        @policies = JSON.parse(response.body)
+        @request_completed = true
+      else
+        raise "#{response.message}"
+      end
     rescue StandardError => error
-      @error_message = "Ocorreu um erro e não foi possível fazer a consulta das apólices. Erro: #{error}"
-      Rails.logger.warn(@message)
-    else
-      @request_completed = true
+      @error_message = "Ocorreu um erro e não foi possível fazer a consulta das apólices. Erro: #{error.message}"
+      Rails.logger.warn(@error_message)
     end
   end
 end
