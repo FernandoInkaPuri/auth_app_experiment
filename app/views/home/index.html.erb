@@ -1,9 +1,25 @@
-<h1> Listar as views aqui </h1>
 <% if user_signed_in? %>
-  <h4> Parabéns <%= current_user.email %> </h4>
+  <h2> Bem vindo <%=current_user.email%>! </h2>
+  <br><br>
+  <h1> Lista de Apólices cadastradas </h1>
   <% if @request_completed %>
-    <% if @policies["data"]["policies"].present? %>
-      <%= @policies %>
+    <% if @policies.present? %>
+      <table>
+        <tr>
+          <th>Id</th>
+          <th>Data de Emissão</th>
+          <th>Nome do Segurado</th>
+          <th>CPF do Segurado</th>
+        </tr>
+      <% @policies.each do |policy| %>
+        <tr>
+          <td> <%= policy["policyId"] %> </td>
+          <td> <%= policy["dataEmissao"] || "Não Registrado" %> </td>
+          <td> <%= policy["segurado"]["nome"] %> </td>
+          <td> <%= policy["segurado"]["cpf"] %> </td>
+        </tr>
+      <% end %>
+      </table>
     <% else %>
       <p> No momento não há nenhuma apólice cadastrada </p>
     <% end %>
