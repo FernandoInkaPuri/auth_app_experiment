@@ -22,7 +22,7 @@ Devise.setup do |config|
   # Cognito Oauth2 Config
   config.omniauth :cognito_idp, ENV["COGNITO_CLIENT_ID"], ENV["COGNITO_CLIENT_SECRET"], {
     client_options: {
-      site: ENV["COGNITO_SITE_URL"]
+      site: ENV["COGNITO_USER_POOL_SITE"]
     },
     name: "cognito_idp",
     user_pool_id: ENV["COGNITO_POOL_ID"],
