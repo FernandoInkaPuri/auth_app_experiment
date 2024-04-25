@@ -170,6 +170,9 @@ GEM
       hashie (>= 3.4.6)
       rack (>= 2.2.3)
       rack-protection
+    omniauth-cognito-idp (0.1.1)
+      jwt
+      omniauth-oauth2
     omniauth-google-oauth2 (1.1.2)
       jwt (>= 2.0)
       oauth2 (~> 2.0)
@@ -294,6 +297,7 @@ DEPENDENCIES
   devise (~> 4.9)
   importmap-rails
   jbuilder
+  omniauth-cognito-idp
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
   pg (~> 1.1)
