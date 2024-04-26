@@ -1,6 +1,6 @@
 require 'net/http'
 class HomeController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :generate_jwt
 
   def index
     uri = URI('http://graphql_api:3001/graphql')
@@ -16,7 +16,10 @@ class HomeController < ApplicationController
         }
       }"
     }
-    headers = { 'Content-Type' => 'application/json' }
+    headers = {
+      'Content-Type' => 'application/json',
+      "Authorization" => "Bearer #{@token}"
+    }
 
     begin
       response = Net::HTTP.post(uri, body.to_json, headers)
@@ -31,5 +34,9 @@ class HomeController < ApplicationController
       @error_message = "Ocorreu um erro e não foi possível fazer a consulta das apólices. Erro: #{error.message}"
       Rails.logger.warn(@error_message)
     end
+  end
+
+  def generate_jwt
+    @token = JWT.encode({}, ENV["JWT_KEY"], "HS256")
   end
 end
