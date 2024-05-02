@@ -297,6 +297,7 @@ DEPENDENCIES
   devise (~> 4.9)
   importmap-rails
   jbuilder
+  jwt
   omniauth-cognito-idp
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
