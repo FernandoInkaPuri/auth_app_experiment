@@ -1,8 +1,10 @@
 <% if user_signed_in? %>
   <h2> Bem vindo <%=current_user.email%>! </h2>
-  <br>
   <%= button_to "logout", destroy_user_session_path, method: :delete  %>
   <br>
+
+  <%= button_to "Criar nova apólice", policies_new_path, method: :get %>
+
   <h1> Lista de Apólices cadastradas </h1>
   <% if @request_completed %>
     <% if @policies.present? %>

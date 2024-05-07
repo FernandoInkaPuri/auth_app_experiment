@@ -1,0 +1,29 @@
+
+<h2>Para criar uma nova apólice preencha as informações abaixo:</h2>
+
+<%= form_with url: "/create" do |form| %>
+  <%= form.label :data_emissao, "Data de Emissão" %>
+  <%= form.text_field :data_emissao %><br/>
+
+  <%= form.label :data_fim_cobertura, "Data do fim da cobertura" %>
+  <%= form.text_field :data_fim_cobertura %>
+  <b><p> Segurado: </p></b>
+  <%= form.label :nome_segurado, "Nome: " %>
+  <%= form.text_field :nome_segurado %><br/>
+
+  <%= form.label :cpf_segurado, "CPF: " %>
+  <%= form.text_field :cpf_segurado %><br/>
+
+  <b><p> Veículo: </p></b>
+
+  <%= form.label :marca_veiculo, "Marca" %>
+  <%= form.text_field :marca_veiculo %><br/>
+  <%= form.label :modelo_veiculo, "Modelo" %>
+  <%= form.text_field :modelo_veiculo %><br/>
+  <%= form.label :ano_veiculo, "Ano" %>
+  <%= form.text_field :ano_veiculo %><br/>
+  <%= form.label :placa_veiculo, "Placa" %>
+  <%= form.text_field :placa_veiculo %><br/><br/>
+
+  <%= form.submit "Criar" %>
+<% end %>

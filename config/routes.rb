@@ -16,4 +16,6 @@ Rails.application.routes.draw do
 
   get 'auth/:provider/callback', to: 'sessions#omniauth'
   root to: "home#index"
+  get 'policies/new', to: 'home#new'
+  post '/create', to: 'home#create'
 end
