@@ -1,7 +1,8 @@
 services:
   auth_app:
-    command: bash -c "rm -f tmp/pids/server.pid  && bin/setup && bundle exec rails s -p 3000 -b '0.0.0.0'"
-    image: ruby:3.2.3
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bin/setup && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    image: auth_app
     working_dir: /auth_app
     container_name: auth_app
     tty: true
@@ -10,27 +11,10 @@ services:
       - .env
     volumes:
       - .:/auth_app/
-      - rubygems:/usr/local/bundle
     ports:
       - "3000:3000"
     networks:
     - policy-network
-
-  postgres:
-    hostname: postgres
-    image: postgres:16
-    volumes:
-      - database:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-    networks:
-      - policy-network
-
-volumes:
-  rubygems:
-  database:
 
 networks:
   policy-network:
