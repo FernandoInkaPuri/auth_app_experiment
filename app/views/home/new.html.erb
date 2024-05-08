@@ -1,7 +1,7 @@
 
 <h2>Para criar uma nova apólice preencha as informações abaixo:</h2>
 
-<%= form_with url: "/create" do |form| %>
+<%= form_with url: policies_create_path do |form| %>
   <%= form.label :data_emissao, "Data de Emissão" %>
   <%= form.text_field :data_emissao %><br/>
 

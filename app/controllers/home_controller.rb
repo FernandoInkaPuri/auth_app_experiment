@@ -42,30 +42,36 @@ class HomeController < ApplicationController
   def create
     uri = URI('http://graphql_api:3001/graphql')
     body = {
-      query: "mutation {
+      query: "mutation
         createPolicy(
           input: {
             policy: {
-              dataEmissao: #{params[:data_emissao]},
-              dataFimCobertura: #{params[:data_fim_cobertura]},
+              dataEmissao: \"#{params[:data_emissao]}\",  dataFimCobertura: \"#{params[:data_fim_cobertura]}\",
               segurado: {
-                nome: #{params[:nome_segurado]},
-                cpf: #{params[:cpf_segurado]},
-              },
+                nome: \"#{params[:nome_segurado]}\",
+                cpf: \"#{params[:cpf_segurado]}\",
+                },
               veiculo: {
-                placa: #{params[:placa_cobertura]},
-                marca: #{params[:marca_cobertura]},
-                modelo: #{params[:modelo_cobertura]},
+                placa: \"#{params[:placa_cobertura]}\",
+                marca: \"#{params[:marca_cobertura]}\",
+                modelo: \"#{params[:modelo_cobertura]}\",
                 ano: #{params[:ano_cobertura]}
               }
             }
           }
-        )"
+        )
+        {
+          result
+        }
+      }"
     }
     headers = {
       'Content-Type' => 'application/json',
       "Authorization" => "Bearer #{@token}"
     }
+
+
+    binding.pry
 
     response = Net::HTTP.post(uri, body.to_json, headers)
     Rails.logger.info(response)
