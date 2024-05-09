@@ -34,8 +34,6 @@ gem 'omniauth-cognito-idp'
 
 gem 'jwt'
 
-gem 'stripe'
-
 gem 'pry'
 
 # Use Redis adapter to run Action Cable in production
