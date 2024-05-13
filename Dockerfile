@@ -2,8 +2,8 @@ FROM ruby:3.2.3
 
 RUN apt-get update -qq && apt-get install -y nodejs
 WORKDIR /auth_app
-COPY Gemfile /auth_app_experiment/Gemfile
-COPY Gemfile.lock /auth_app_experiment/Gemfile.lock
+COPY Gemfile /auth_app/Gemfile
+COPY Gemfile.lock /auth_app/Gemfile.lock
 RUN bundle install
 
 # Add a script to be executed every time the container starts.
