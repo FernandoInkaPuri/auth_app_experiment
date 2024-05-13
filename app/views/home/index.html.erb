@@ -10,10 +10,12 @@
     <% if @policies.present? %>
       <table>
         <tr>
-          <th>Id</th>
-          <th>Data de Emissão</th>
-          <th>Nome do Segurado</th>
-          <th>CPF do Segurado</th>
+          <th> Id </th>
+          <th> Data de Emissão </th>
+          <th> Nome do Segurado </th>
+          <th> CPF do Segurado </th>
+          <th> Status da Apólice </th>
+          <th> Link de Pagamento </th>
         </tr>
       <% @policies.each do |policy| %>
         <tr>
@@ -21,6 +23,10 @@
           <td> <%= policy["dataEmissao"] || "Não Registrado" %> </td>
           <td> <%= policy["segurado"]["nome"] %> </td>
           <td> <%= policy["segurado"]["cpf"] %> </td>
+          <td> <%= policy["status"] %> </td>
+          <td style="max-width: 200px; overflow: hidden;">
+            <a href="<%= policy["charge"]["paymentLink"] %>" target="_blank">Clique aqui</a>
+          </td>
         </tr>
       <% end %>
       </table>
