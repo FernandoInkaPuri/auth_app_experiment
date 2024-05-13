@@ -9,9 +9,14 @@ class HomeController < ApplicationController
         policies {
           policyId
           dataEmissao
+          status
           segurado {
             nome
             cpf
+          }
+          charge {
+            paymentId
+            paymentLink
           }
         }
       }"
@@ -25,6 +30,9 @@ class HomeController < ApplicationController
       response = Net::HTTP.post(uri, body.to_json, headers)
       if response.code == "200"
         policies_hash = JSON.parse(response.body)
+
+        # binding.pry
+
         @policies = policies_hash["data"]["policies"]
         @request_completed = true
       else
@@ -41,6 +49,7 @@ class HomeController < ApplicationController
 
   def create
     uri = URI('http://graphql_api:3001/graphql')
+    payment_session = create_payment_checkout
     body = {
       query: "mutation {
         createPolicy(
@@ -57,7 +66,11 @@ class HomeController < ApplicationController
                 marca: \"#{params[:marca_viculo]}\",
                 modelo: \"#{params[:modelo_veiculo]}\",
                 ano: #{params[:ano_veiculo]}
-              }
+              },
+              charge: {
+                paymentId: \"#{payment_session.id}\",
+                paymentLink: \"#{payment_session.url}\",
+              },
             }
           }
         )
@@ -90,5 +103,18 @@ class HomeController < ApplicationController
 
   def generate_jwt
     @token = JWT.encode({}, ENV["JWT_KEY"], "HS256")
+  end
+
+  def create_payment_checkout
+    Stripe::Checkout::Session.create(
+      payment_method_types: ['card'],
+      line_items: [{
+        price: 'price_1PFyrsInqposUGo2WwETKIZg',
+        quantity: 1,
+      }],
+      mode: 'payment',
+      success_url:  success_charges_url,
+      cancel_url: cancel_charges_url
+    )
   end
 end
